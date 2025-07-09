@@ -39,6 +39,15 @@ c.execute('''CREATE TABLE IF NOT EXISTS attempts (
             )''')
 conn.commit()
 
+def get_data_by_name(student):
+    conn = sqlite3.connect('exam_history.db', check_same_thread=False)
+    c = conn.cursor()
+    c.execute('''SELECT * FROM attempts WHERE student_name = ?''', (student,))
+    data = c.fetchall()
+    conn.close()
+    return data
+
+
 # Custom CSS for styling
 st.markdown("""
     <style>
@@ -256,6 +265,8 @@ if 'grading_complete' not in st.session_state:
     st.session_state.grading_complete = False
 if 'show_exam' not in st.session_state:
     st.session_state.show_exam = False
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = []
 
 
 if st.query_params.get("generate") == "one":
@@ -588,5 +599,54 @@ st.markdown("""
 # Close database connection at end
 conn.close()
 
-if st.session_state.active_tab == "history":
-    pass
+if st.session_state.active_tab == "Recommender":
+    with st.container():
+        st.header("Get Personalized Recomandations")
+        col1, col2 = st.columns([4,1], border=True)
+        with col1:
+            # Database to store Chat
+            conn = sqlite3.connect('Chat_history.db', check_same_thread=False)
+            c = conn.cursor()
+            c.execute('''CREATE TABLE IF NOT EXISTS chats (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        user TEXT
+                        bilalgpt TEXT
+                    )''')
+            c.execute("PRAGMA table_info(chats);")
+            columns = [column[1] for column in c.fetchall()]
+
+            if 'bilalgpt' not in columns:
+                c.execute('''ALTER TABLE chats ADD COLUMN bilalgpt TEXT;''')
+            conn.commit()
+
+            student = st.text_input("Student name")
+            student_data = get_data_by_name(student)
+            # Initialize LLM
+            llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")    
+            query = st.text_input("Ask me Anything...")
+
+            if query:
+                prompt = f"""You are Recommantion System. These are the stats of the Student:{student_data}
+                        According to this student data and stats , provide personalized recomendations to the student.\n
+                        also respond to the user query:{query}"""
+                response = llm.invoke(prompt)
+                c.execute('''INSERT INTO chats (user, bilalgpt)  VALUES (?, ?)''',(query, str(response.content),))
+                conn.commit()
+                st.markdown(response.content)
+        with col2:
+            st.subheader("Chat history")
+            conn = sqlite3.connect('Chat_history.db', check_same_thread=False)
+            c = conn.cursor()
+            c.execute("SELECT * FROM chats")
+            chats = c.fetchall()
+            conn.close()
+            if chats == None:
+                st.warning("Start Conservation!") 
+            else:
+                for chat in chats:
+                    id, user, bilalgpt = chat
+                    plan_container = st.container()
+                    with plan_container:
+                        if st.button(f"Chat {id}", key=f"load_{id}", args=(id,)):
+                            st.markdown(f"User:{chat["user"]}.\nBilal GPT: {chat["bilalgpt"]}")
+               
