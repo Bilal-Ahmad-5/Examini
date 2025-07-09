@@ -1,0 +1,10 @@
+langchain 
+langchain_community
+langchain_core
+langchain-groq
+langchain-huggingface
+python-dotenv
+streamlit
+pandas
+matplotlib
+langchain-google-genai
