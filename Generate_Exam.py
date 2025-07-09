@@ -600,9 +600,15 @@ st.markdown("""
 conn.close()
 
 if st.session_state.active_tab == "Recommender":
+    st.markdown("""
+    <div class="header">
+        <h1>📝 Recommendation System</h1>
+        <p>Create, attempt, and grade exams - All in one platform</p>
+    </div>
+    """, unsafe_allow_html=True)
     with st.container():
-        st.header("Get Personalized Recomandations")
-        col1, col2 = st.columns([4,1], border=True)
+        st.subheader("⚡Enter Student for Personalized Recomandations")
+        col1, col2 = st.columns([3,1], border=True)
         with col1:
             # Database to store Chat
             conn = sqlite3.connect('Chat_history.db', check_same_thread=False)
@@ -625,7 +631,7 @@ if st.session_state.active_tab == "Recommender":
             llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")    
             query = st.text_input("Ask me Anything...")
 
-            if query:
+            if st.button("Submit"):
                 prompt = f"""You are Recommantion System. These are the stats of the Student:{student_data}
                         According to this student data and stats , provide personalized recomendations to the student.\n
                         also respond to the user query:{query}"""
@@ -639,7 +645,12 @@ if st.session_state.active_tab == "Recommender":
             c = conn.cursor()
             c.execute("SELECT * FROM chats")
             chats = c.fetchall()
-            conn.close()
+            colm,colt = st.columns([2,2])
+            with colt:
+                if st.button("Clear"):
+                    c.execute("DELETE FROM chats")
+                    conn.commit()
+
             if chats == None:
                 st.warning("Start Conservation!") 
             else:
@@ -647,6 +658,8 @@ if st.session_state.active_tab == "Recommender":
                     id, user, bilalgpt = chat
                     plan_container = st.container()
                     with plan_container:
-                        if st.button(f"Chat {id}", key=f"load_{id}", args=(id,)):
-                            st.markdown(f"User:{chat["user"]}.\nBilal GPT: {chat["bilalgpt"]}")
+                        if st.button(f"Chat {id}", key=f"load_{id}"):
+                            st.markdown(f"User:{user}")
+                            st.markdown(f"Bilal GPT: {bilalgpt}")
+            
                
