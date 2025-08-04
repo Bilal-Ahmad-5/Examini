@@ -15,6 +15,7 @@ st.title("🤖 Examini",)
 
 pg = st.navigation({"🤖 Examini":
                     [st.Page("Plan_Lesson.py"),
-                    st.Page("Generate_Exam.py")]
+                    st.Page("Generate_Exam.py"),
+                    st.Page("Recomandation.py")]
                 })
 pg.run()
