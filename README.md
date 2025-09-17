@@ -66,47 +66,39 @@ bash
 streamlit run Home.py
 
 
-📋 Usage Guide
-Lesson Planning:
+### 📋 Usage Guide
+## Lesson Planning:
 
-Select subject and topic
+- Select subject and topic
+- Choose duration (1 week/1 month)
+- Set daily study hours
+- Generate personalized study plan
 
-Choose duration (1 week/1 month)
+## Exam Generation:
 
-Set daily study hours
+- Create exams by subject/topic
+- Attempt generated exams
+- Get instant grading and feedback
+- Review exam history
 
-Generate personalized study plan
+## Recommendations:
 
-Exam Generation:
-
-Create exams by subject/topic
-
-Attempt generated exams
-
-Get instant grading and feedback
-
-Review exam history
-
-Recommendations:
-
-Enter student name to view performance history
-
-Chat with AI tutor for personalized advice
-
-Save and review learning conversations
+- Enter student name to view performance history
+- Chat with AI tutor for personalized advice
+- Save and review learning conversations
 
 📂 Project Structure
-text
+
 examini/
-├── Home.py                 # Main application entry point
-├── Plan_Lesson.py          # Lesson planning module
-├── Generate_Exam.py        # Exam generation module
-├── Recomandation.py        # Recommendation system
-├── requirements.txt        # Dependencies
-├── .env.example         # Environment template
-├── study_plans.db          # Database for study plans
-├── exam_history.db         # Database for exam history
-└── README.md
+- ├── Home.py                 # Main application entry point
+- ├── Plan_Lesson.py          # Lesson planning module
+- ├── Generate_Exam.py        # Exam generation module
+- ├── Recomandation.py        # Recommendation system
+- ├── requirements.txt        # Dependencies
+- ├── .env.example         # Environment template
+- ├── study_plans.db          # Database for study plans
+- ├── exam_history.db         # Database for exam history
+- └── README.md
 
 📜 License
 Distributed under the MIT License. See LICENSE for more information.
