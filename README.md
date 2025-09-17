@@ -43,51 +43,50 @@ Examini is an innovative AI-powered educational platform that revolutionizes lea
 
 ## 🛠️ Installation & Setup
 
-1. Clone the repository:
+Clone the repository:
 ```bash
 git clone https://github.com/Bilal-Ahmad-5/Examini.git
 cd examini
-Install dependencies:
 
+Install dependencies:
 bash
 pip install -r requirements.txt
-Set up environment variables:
 
+Set up environment variables:
 bash
 cp .env.example .env
-Add your API keys to the .env file:
 
+Add your API keys to the .env file:
 env
 GOOGLE_API_KEY=your_google_api_key
 GROQ_API_KEY=your_groq_api_key
+
 Run the application:
-
 bash
-streamlit run Home.py
-
-
-### 📋 Usage Guide
-## Lesson Planning:
+streamlit run main.py
+```
+**### 📋 Usage Guide**
+#**# Lesson Planning:**
 
 - Select subject and topic
 - Choose duration (1 week/1 month)
 - Set daily study hours
 - Generate personalized study plan
 
-## Exam Generation:
+**## Exam Generation:**
 
 - Create exams by subject/topic
 - Attempt generated exams
 - Get instant grading and feedback
 - Review exam history
 
-## Recommendations:
+**## Recommendations:**
 
 - Enter student name to view performance history
 - Chat with AI tutor for personalized advice
 - Save and review learning conversations
 
-📂 Project Structure
+**📂 Project Structure**
 
 examini/
 - ├── Home.py                 # Main application entry point
@@ -100,7 +99,5 @@ examini/
 - ├── exam_history.db         # Database for exam history
 - └── README.md
 
-📜 License
+**📜 License**
 Distributed under the MIT License. See LICENSE for more information.
-
-✉️ Contact
