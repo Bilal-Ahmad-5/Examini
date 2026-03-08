@@ -1,103 +1,127 @@
-# 📚 Examini - AI-Powered Learning Platform
+# 📚 Examini — AI-Powered Learning Platform
 
-Examini is an innovative AI-powered educational platform that revolutionizes learning through personalized study plans, intelligent exam generation, and adaptive recommendations. Built with cutting-edge AI technologies, Examini helps students optimize their study process while providing educators with powerful tools for content creation.
+> *Study smarter. Learn faster. Perform better.*
 
-## ✨ Key Features
+Examini is an AI-powered educational platform that generates personalized study plans, creates intelligent exams, and adapts recommendations to every student's progress — all in one place.
 
-### 📅 AI Lesson Planner
-- **Personalized Study Plans**: Generate weekly or monthly study schedules tailored to your learning goals
-- **Adaptive Difficulty**: Beginner, Intermediate, and Advanced levels
-- **Progress Tracking**: Visualize your learning journey with intuitive interfaces
-- **Resource Integration**: Includes practical exercises and learning resources
+---
 
-### 📝 AI Exam Generator
-- **Smart Question Creation**: Automatically generate MCQs, short answer, and essay questions
-- **Auto-Grading System**: Instant scoring and feedback on exam attempts
-- **Performance Analytics**: Detailed breakdown of strengths and weaknesses
-- **Exam History**: Track progress across multiple attempts
+## 🚀 Quick Start
 
-### 🎯 Personalized Recommendations
-- **AI Tutor Assistant**: Get customized learning recommendations
-- **Performance Analysis**: Insights based on exam history
-- **Chat History**: Save and review past learning interactions
-- **Adaptive Learning Paths**: Content adjusts to your progress
-
-## 🚀 Technology Stack
-
-- **AI Models**:
-  - Google Gemini Flash 1.5
-  - Groq API (Llama 3)
-  
-- **Frameworks**:
-  - Streamlit (Frontend)
-  - LangChain (AI Orchestration)
-  - Pydantic (Structured Outputs)
-  
-- **Database**:
-  - SQLite (Data Storage)
-  
-- **APIs & Tools**:
-  - Google Gemino Api (LLM Integration)
-  - Tavily Search Api (Resource Integration)
-  - Dotenv (Environment Management)
-
-## 🛠️ Installation & Setup
-
-Clone the repository:
 ```bash
+# Clone the repo
 git clone https://github.com/Bilal-Ahmad-5/Examini.git
 cd examini
 
-Install dependencies:
-bash
+# Install dependencies
 pip install -r requirements.txt
 
-Set up environment variables:
-bash
+# Set up environment variables
 cp .env.example .env
+```
 
-Add your API keys to the .env file:
-env
+Add your API keys to `.env`:
+
+```
 GOOGLE_API_KEY=your_google_api_key
 GROQ_API_KEY=your_groq_api_key
+```
 
-Run the application:
-bash
+> Get your keys: [Google Gemini](https://makersuite.google.com/app/apikey) · [Groq](https://console.groq.com)
+
+Then launch the app:
+
+```bash
 streamlit run main.py
 ```
-**### 📋 Usage Guide**
-#**# Lesson Planning:**
 
-- Select subject and topic
-- Choose duration (1 week/1 month)
-- Set daily study hours
-- Generate personalized study plan
+---
 
-**## Exam Generation:**
+## ✨ What It Does
 
-- Create exams by subject/topic
-- Attempt generated exams
-- Get instant grading and feedback
-- Review exam history
+### 📅 AI Lesson Planner
+*Build a study schedule that fits your life*
 
-**## Recommendations:**
+- Generate weekly or monthly study plans tailored to your goals
+- Choose your level — Beginner, Intermediate, or Advanced
+- Set your subject, topic, and daily study hours
+- Track your progress visually as you go
 
-- Enter student name to view performance history
-- Chat with AI tutor for personalized advice
-- Save and review learning conversations
+### 📝 AI Exam Generator
+*Practice smarter with AI-crafted questions*
 
-**📂 Project Structure**
+- Auto-generate MCQs, short answer, and essay questions on any topic
+- Get instant grading and detailed feedback after each attempt
+- Review your exam history to spot strengths and weaknesses
+- Track improvement across multiple attempts
 
+### ✅ AI Exam Checker & Grading
+*Instant, intelligent evaluation of every answer*
+
+- Submit completed exams and get **automated grading in seconds**
+- AI evaluates MCQs, short answers, and essays with context-aware scoring
+- Receive **detailed feedback per question** — not just a score, but why
+- Get a **performance breakdown** showing strong topics vs areas to revisit
+- All results saved to exam history for progress tracking over time
+
+### 🎯 Personalized Recommendations
+*An AI tutor that knows your progress*
+
+- Chat with an AI tutor for customized learning advice
+- Get recommendations based on your actual exam performance
+- Save and revisit past learning conversations
+- Adaptive learning paths that evolve as you improve
+
+---
+
+## 💡 How to Use
+
+| Module | Steps |
+|--------|-------|
+| 📅 **Lesson Planner** | Select subject → Set duration → Set daily hours → Generate plan |
+| 📝 **Exam Generator** | Choose topic → Generate exam → Attempt it → Submit answers |
+| ✅ **Exam Checker** | AI grades your answers → Feedback per question → Saved to history |
+| 🎯 **Recommendations** | Enter your name → View history → Chat with AI tutor |
+
+---
+
+## 🧰 Tech Stack
+
+| Layer | Tools |
+|-------|-------|
+| **LLMs** | Google Gemini Flash 1.5 · Groq (Llama 3) |
+| **Framework** | Streamlit · LangChain · Pydantic |
+| **Database** | SQLite |
+| **APIs** | Google Gemini · Tavily Search |
+
+---
+
+## 📂 Project Structure
+
+```
 examini/
-- ├── Home.py                 # Main application entry point
-- ├── Plan_Lesson.py          # Lesson planning module
-- ├── Generate_Exam.py        # Exam generation module
-- ├── Recomandation.py        # Recommendation system
-- ├── requirements.txt        # Dependencies
-- ├── .env.example         # Environment template
-- ├── study_plans.db          # Database for study plans
-- ├── exam_history.db         # Database for exam history
-- └── README.md
+├── main.py               # App entry point
+├── Plan_Lesson.py         # Lesson planning module
+├── Generate_Exam.py       # Exam generation module
+├── Recomandation.py       # Recommendation system
+├── study_plans.db         # Study plan storage
+├── exam_history.db        # Exam history storage
+├── requirements.txt
+└── .env.example
+```
 
-**📜 License**
-Distributed under the MIT License. See LICENSE for more information.
+---
+
+## 🤝 Contributing
+
+Fork it, improve it, open a pull request. Ideas for new subjects, question types, or UI improvements are all welcome.
+
+---
+
+## 📄 License
+
+MIT — free to use and build upon.
+
+---
+
+*Every student deserves a personalized path to success. Examini helps build it.*
