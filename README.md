@@ -1,8 +1,8 @@
-# 📚 Examini — AI-Powered Learning Platform
+# 📚 Examini - AI-Powered Learning Platform
 
 > *Study smarter. Learn faster. Perform better.*
 
-Examini is an AI-powered educational platform that generates personalized study plans, creates intelligent exams, and adapts recommendations to every student's progress — all in one place.
+Examini is an AI-powered educational platform that generates personalized study plans, creates intelligent exams, and adapts recommendations to every student's progress - all in one place.
 
 ---
 
@@ -60,7 +60,7 @@ streamlit run main.py
 
 - Submit completed exams and get **automated grading in seconds**
 - AI evaluates MCQs, short answers, and essays with context-aware scoring
-- Receive **detailed feedback per question** — not just a score, but why
+- Receive **detailed feedback per question**, not just a score, but why
 - Get a **performance breakdown** showing strong topics vs areas to revisit
 - All results saved to exam history for progress tracking over time
 
@@ -120,7 +120,7 @@ Fork it, improve it, open a pull request. Ideas for new subjects, question types
 
 ## 📄 License
 
-MIT — free to use and build upon.
+MIT - free to use and build upon.
 
 ---
 
