@@ -551,24 +551,45 @@ class Questions(BaseModel):
     LongQuestion2: str = Field(description="2nd Long question of the given topic")
     Responses: List[Answers] = Field(description="Answers these questions one by one")
 
+# Initialize session state
+if 'subject' not in st.session_state:
+    st.session_state.subject = ""
+if 'topic' not in st.session_state:
+    st.session_state.topic = ""
+if 'mcqs' not in st.session_state:
+    st.session_state.mcqs = None
+if 'short_questions' not in st.session_state:
+    st.session_state.short_questions = None
+if 'active_tab' not in st.session_state:
+    st.session_state.active_tab = "generate"
+if 'current_exam_id' not in st.session_state:
+    st.session_state.current_exam_id = None
+if 'student_name' not in st.session_state:
+    st.session_state.student_name = ""
+if 'student_answers' not in st.session_state:
+    st.session_state.student_answers = {}
+if 'grading_complete' not in st.session_state:
+    st.session_state.grading_complete = False
+if 'show_exam' not in st.session_state:
+    st.session_state.show_exam = False
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = []
 
-# ─── SESSION STATE ───────────────────────────────────────────────────────────────
-defaults = {
-    'subject': "", 'topic': "", 'mcqs': None, 'short_questions': None,
-    'active_tab': "generate", 'current_exam_id': None,
-    'student_name': "", 'student_answers': {}, 'grading_complete': False,
-    'show_exam': False, 'chat_history': [],
-    'attempt_score': 0, 'attempt_total': 12
-}
-for k, v in defaults.items():
-    if k not in st.session_state:
-        st.session_state[k] = v
+
+if st.query_params.get("generate") == "one":
+    st.session_state.active_tab = "generate"
+if st.query_params.get("attempt") == "two":
+    st.session_state.active_tab = "attempt"
+if st.query_params.get("history") == 3:
+    st.session_state.active_tab = "history"
+if st.query_params.get("Recommender") == 4:
+    st.session_state.active_tab = "Recommender"
+    
 
 
-# ─── NAV BAR ────────────────────────────────────────────────────────────────────
-nav1, nav2, nav3 = st.columns(3)
-with nav1:
-    if st.button("✦  Generate Exam", use_container_width=True):
+col1,col2,col3,col4 = st.columns([2,2,2,2])
+with col1:
+    if st.button("Generate Exam"):
         st.session_state.active_tab = "generate"
         st.rerun()
 with nav2:
@@ -579,20 +600,12 @@ with nav3:
     if st.button("⊞  View History", use_container_width=True):
         st.session_state.active_tab = "history"
         st.rerun()
+with col4:
+    if st.button("Recommender"):
+        st.session_state.active_tab = "Recommender"
+        st.rerun()
 
-# Active tab indicator
-tab_labels = {"generate": "Generate Exam", "attempt": "Attempt Exam", "history": "View History"}
-st.markdown(f"""
-<div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-color:var(--accent);margin-bottom:1.8rem;padding-left:2px;">
-    ◆ &nbsp;{tab_labels.get(st.session_state.active_tab, '')}
-</div>
-""", unsafe_allow_html=True)
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# GENERATE EXAM
-# ═══════════════════════════════════════════════════════════════════════════════
+# Generate Exam
 if st.session_state.active_tab == "generate":
 
     st.markdown('<div class="section-label">Exam Setup</div>', unsafe_allow_html=True)
@@ -936,3 +949,68 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 conn.close()
+
+if st.session_state.active_tab == "Recommender":
+    st.markdown("""
+    <div class="header">
+        <h1>📝 Recommendation System</h1>
+        <p>Create, attempt, and grade exams - All in one platform</p>
+    </div>
+    """, unsafe_allow_html=True)
+    with st.container():
+        st.subheader("⚡Enter Student for Personalized Recomandations")
+        col1, col2 = st.columns([3,1], border=True)
+        with col1:
+            # Database to store Chat
+            conn = sqlite3.connect('Chat_history.db', check_same_thread=False)
+            c = conn.cursor()
+            c.execute('''CREATE TABLE IF NOT EXISTS chats (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        user TEXT
+                        bilalgpt TEXT
+                    )''')
+            c.execute("PRAGMA table_info(chats);")
+            columns = [column[1] for column in c.fetchall()]
+
+            if 'bilalgpt' not in columns:
+                c.execute('''ALTER TABLE chats ADD COLUMN bilalgpt TEXT;''')
+            conn.commit()
+
+            student = st.text_input("Student name")
+            student_data = get_data_by_name(student)
+            # Initialize LLM
+            llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")    
+            query = st.text_input("Ask me Anything...")
+
+            if st.button("Submit"):
+                prompt = f"""You are Recommantion System. These are the stats of the Student:{student_data}
+                        According to this student data and stats , provide personalized recomendations to the student.\n
+                        also respond to the user query:{query}"""
+                response = llm.invoke(prompt)
+                c.execute('''INSERT INTO chats (user, bilalgpt)  VALUES (?, ?)''',(query, str(response.content),))
+                conn.commit()
+                st.markdown(response.content)
+        with col2:
+            st.subheader("Chat history")
+            conn = sqlite3.connect('Chat_history.db', check_same_thread=False)
+            c = conn.cursor()
+            c.execute("SELECT * FROM chats")
+            chats = c.fetchall()
+            colm,colt = st.columns([2,2])
+            with colt:
+                if st.button("Clear"):
+                    c.execute("DELETE FROM chats")
+                    conn.commit()
+
+            if chats == None:
+                st.warning("Start Conservation!") 
+            else:
+                for chat in chats:
+                    id, user, bilalgpt = chat
+                    plan_container = st.container()
+                    with plan_container:
+                        if st.button(f"Chat {id}", key=f"load_{id}"):
+                            st.markdown(f"User:{user}")
+                            st.markdown(f"Bilal GPT: {bilalgpt}")
+            
+               
